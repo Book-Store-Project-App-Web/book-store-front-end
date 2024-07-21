@@ -1,4 +1,5 @@
 import Header from '~/components/Header/Header'
+import Footer from './components/Footer/Footer'
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
             {/* Repeat for more products */}
           </div>
         </main>
+        {/* Footer */}
+        <Footer />
       </div>
     </>
   )
