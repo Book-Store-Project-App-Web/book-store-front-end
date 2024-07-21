@@ -1,28 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Header from '~/components/Header/Header'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href='https://vitejs.dev' rel='noreferrer' target='_blank'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' rel='noreferrer' target='_blank'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
+      <div className='bg-gray-100 min-h-screen'>
+        {/* Header */}
+        <Header />
+        {/* Main Content */}
+        <main className='container mx-auto p-4'>
+          {/* Banner */}
+          <div className='bg-white p-4 rounded-lg shadow-md mb-4'>
+            <img src='path/to/banner-image.png' alt='Banner' className='w-full h-64 object-cover rounded-lg' />
+          </div>
+
+          {/* Categories */}
+          <div className='flex space-x-4 mb-4'>
+            <div className='bg-white p-4 rounded-lg shadow-md flex-1'>
+              <h2 className='text-xl font-semibold'>Category 1</h2>
+            </div>
+            <div className='bg-white p-4 rounded-lg shadow-md flex-1'>
+              <h2 className='text-xl font-semibold'>Category 2</h2>
+            </div>
+            <div className='bg-white p-4 rounded-lg shadow-md flex-1'>
+              <h2 className='text-xl font-semibold'>Category 3</h2>
+            </div>
+          </div>
+
+          {/* Products */}
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+            <div className='bg-white p-4 rounded-lg shadow-md'>
+              <img src='path/to/product-image.png' alt='Product' className='w-full h-48 object-cover rounded-lg mb-4' />
+              <h3 className='text-lg font-semibold'>Product Name</h3>
+              <p className='text-gray-600'>$100</p>
+            </div>
+            {/* Repeat for more products */}
+          </div>
+        </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p className='text-3xl font-bold underline'>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs '>Click on the Vite and React logos to learn more</p>
     </>
   )
 }
