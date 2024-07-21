@@ -5,6 +5,7 @@ import fahasa from '~/assets/fahasa-logo.webp'
 import Notification from './DropDowns/Notification'
 import Cart from './DropDowns/Cart'
 import Profile from './DropDowns/Profile'
+import { NavLink } from 'react-router-dom'
 
 function Header() {
   return (
@@ -16,7 +17,9 @@ function Header() {
         <div className='h-20 p-2 bg-white'>
           <div className='w-10/12 2xl:w-8/12 mx-auto flex justify-between items-center h-full '>
             <div className='w-56 mb-1'>
-              <img src={fahasa} alt='none' />
+              <NavLink to='/'>
+                <img src={fahasa} alt='none' />
+              </NavLink>
             </div>
             <div className='flex-1 mx-6 w-full relative flex items-center'>
               <input
