@@ -1,4 +1,8 @@
-import { Button, Checkbox, Form, Input, Select } from 'antd'
+import { Button, Checkbox, Form, Input, Select, Spin } from 'antd'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import authAPI from '~/api/authAPI'
 const { Option } = Select
 
 const formItemLayout = {
@@ -32,8 +36,21 @@ const tailFormItemLayout = {
   }
 }
 function Register() {
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values)
+  const [isLoading, setisLoading] = useState(false)
+
+  const navigate = useNavigate()
+
+  const onFinish = async (values) => {
+    setisLoading(true)
+    try {
+      await authAPI.signUp(values)
+      toast.success('Đăng ký thành công, vui lòng đăng nhập tài khoản')
+      navigate('/login')
+    } catch (error) {
+      toast.error(error.response.data.message)
+    } finally {
+      setisLoading(false)
+    }
   }
   const prefixSelector = (
     <Form.Item name='prefix' noStyle>
@@ -60,6 +77,8 @@ function Register() {
         }}
         scrollToFirstError
       >
+        <p className='text-3xl text-center py-6 pl-28'>Đăng ký</p>
+
         <Form.Item
           name='firstName'
           label='Họ'
@@ -144,9 +163,16 @@ function Register() {
           <Checkbox>Tôi đã đồng ý với Fahasa.com về Điều khoản dịch vụ & Chính sách bảo mật</Checkbox>
         </Form.Item>
         <Form.Item {...tailFormItemLayout} className='text-center'>
-          <Button type='danger' htmlType='submit' className='login-form-button px-6 bg-red-600 text-white'>
-            Đăng ký
-          </Button>
+          {isLoading ? (
+            <Button disabled htmlType='submit' className='login-form-button px-6 bg-red-600 text-white'>
+              <Spin size='small' />
+              Đăng ký
+            </Button>
+          ) : (
+            <Button type='danger' htmlType='submit' className='login-form-button px-6 bg-red-600 text-white'>
+              Đăng ký
+            </Button>
+          )}
         </Form.Item>
       </Form>
     </div>
