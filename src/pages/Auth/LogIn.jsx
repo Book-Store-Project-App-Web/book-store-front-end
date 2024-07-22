@@ -1,10 +1,27 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Form, Input } from 'antd'
-import { NavLink } from 'react-router-dom'
+import { Button, Form, Input, Spin } from 'antd'
+import { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import authAPI from '~/api/authAPI'
 
 function LogIn() {
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values)
+  const [isLoading, setisLoading] = useState(false)
+
+  const navigate = useNavigate()
+
+  const onFinish = async (data) => {
+    setisLoading(true)
+
+    try {
+      await authAPI.logIn(data)
+      toast.success('Đăng nhập thành công !')
+      navigate('/')
+    } catch (error) {
+      toast.error(error.response.data.message)
+    } finally {
+      setisLoading(false)
+    }
   }
   return (
     <>
@@ -21,7 +38,7 @@ function LogIn() {
             <p className='text-3xl text-center py-6'>Đăng Nhập</p>
             <Form.Item
               className='mb-8'
-              name='username'
+              name='email'
               rules={[
                 {
                   required: true,
@@ -52,9 +69,16 @@ function LogIn() {
             </Form.Item>
 
             <Form.Item className='text-center'>
-              <Button type='danger' htmlType='submit' className='login-form-button px-6 bg-red-600 text-white'>
-                Đăng nhập
-              </Button>
+              {isLoading ? (
+                <Button disabled className='login-form-button px-6 bg-red-600 text-white'>
+                  <Spin size='small' />
+                  Đăng nhập
+                </Button>
+              ) : (
+                <Button type='danger' htmlType='submit' className='login-form-button px-6 bg-red-600 text-white'>
+                  Đăng nhập
+                </Button>
+              )}
             </Form.Item>
           </Form>
         </div>
