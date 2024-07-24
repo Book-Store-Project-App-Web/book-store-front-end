@@ -1,11 +1,30 @@
 import { faUser, faRectangleList, faHeart } from '@fortawesome/free-regular-svg-icons'
 import { faArrowRightFromBracket, faTicket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import { Dropdown } from 'antd'
+import authAPI from '~/api/authAPI'
+import { useContext } from 'react'
+import { AuthContext } from '~/context/AuthContext'
+import { toast } from 'react-toastify'
 
 function Profile() {
+  const navigate = useNavigate()
+  const { currentUser, updateUser } = useContext(AuthContext)
+
+  const handleLogout = async () => {
+    if (currentUser) {
+      try {
+        await authAPI.logOut()
+        updateUser(null)
+        navigate('/')
+        toast.success('Đăng xuất thành công')
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
   const items = [
     {
       key: '1',
@@ -37,7 +56,7 @@ function Profile() {
     {
       key: '4',
       label: (
-        <a className='border-t-2 border-gray-200 flex justify-center items-center p-1'>
+        <a onClick={handleLogout} className='border-t-2 border-gray-200 flex justify-center items-center p-1'>
           <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-gray-500' />
           <span className=' flex-1 ml-2 text-gray-500'>Đăng xuất</span>
         </a>

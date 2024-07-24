@@ -3,6 +3,8 @@ import DefaultLayout from './layout/DefaultLayout'
 import LogIn from './pages/Auth/LogIn'
 import Home from './pages/Home/Home'
 import Register from './pages/Auth/Register'
+import RequireLayout from './layout/RequireLayout'
+import Cart from './pages/Cart/Cart'
 
 function App() {
   const router = createBrowserRouter([
@@ -14,6 +16,11 @@ function App() {
         { path: 'login', element: <LogIn /> },
         { path: 'register', element: <Register /> }
       ]
+    },
+    {
+      path: '/',
+      element: <RequireLayout />,
+      children: [{ path: 'my-cart', element: <Cart /> }]
     }
   ])
 

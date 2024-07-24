@@ -1,11 +1,14 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Spin } from 'antd'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import authAPI from '~/api/authAPI'
+import { AuthContext } from '~/context/AuthContext'
 
 function LogIn() {
+  const { updateUser } = useContext(AuthContext)
+
   const [isLoading, setisLoading] = useState(false)
 
   const navigate = useNavigate()
@@ -14,7 +17,8 @@ function LogIn() {
     setisLoading(true)
 
     try {
-      await authAPI.logIn(data)
+      const res = await authAPI.logIn(data)
+      updateUser(res)
       toast.success('Đăng nhập thành công !')
       navigate('/')
     } catch (error) {
