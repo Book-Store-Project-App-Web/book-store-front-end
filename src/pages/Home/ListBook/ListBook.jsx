@@ -2,6 +2,7 @@ import { faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { Badge, Rate } from 'antd'
+import { NavLink } from 'react-router-dom'
 
 function ListBook({ listBooks }) {
   return (
@@ -15,8 +16,8 @@ function ListBook({ listBooks }) {
             listBooks.map((book) => {
               return (
                 <>
-                  <a href='' className='rounded-lg hover:shadow-md  '>
-                    <Badge.Ribbon text={`${book.discount}%`} color='red'>
+                  <NavLink to={`/chi-tiet-sach/${book.slug}/${book.id}`} className='rounded-lg hover:shadow-md'>
+                    <Badge.Ribbon text={`-${book.discount}%`} color='red'>
                       <div className='p-4'>
                         <div>
                           <img src='/s1.webp' alt='Product' className='w-full h-48 object-cover rounded-lg mb-4' />
@@ -42,7 +43,7 @@ function ListBook({ listBooks }) {
                         </div>
                       </div>
                     </Badge.Ribbon>
-                  </a>
+                  </NavLink>
                 </>
               )
             })}
