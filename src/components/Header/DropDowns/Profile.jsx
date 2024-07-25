@@ -3,7 +3,7 @@ import { faArrowRightFromBracket, faTicket } from '@fortawesome/free-solid-svg-i
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-import { Dropdown } from 'antd'
+import { Button, Dropdown } from 'antd'
 import authAPI from '~/api/authAPI'
 import { useContext } from 'react'
 import { AuthContext } from '~/context/AuthContext'
@@ -25,53 +25,67 @@ function Profile() {
       }
     }
   }
-  const items = [
-    {
-      key: '1',
-      label: (
-        <a className='flex justify-center items-center p-1'>
-          <FontAwesomeIcon icon={faRectangleList} className='text-gray-500' />
-          <span className='flex-1 ml-2 text-gray-500'>Đơn hàng của tôi</span>
-        </a>
-      )
-    },
-    {
-      key: '2',
-      label: (
-        <a className='flex justify-center items-center p-1'>
-          <FontAwesomeIcon icon={faHeart} className='text-gray-500' />
-          <span className='flex-1 ml-2 text-gray-500'>Sản phẩm yêu thích</span>
-        </a>
-      )
-    },
-    {
-      key: '3',
-      label: (
-        <a className='flex justify-center items-center p-1'>
-          <FontAwesomeIcon icon={faTicket} className='text-gray-500' />
-          <span className='flex-1 ml-2 text-gray-500'>Wallet Voucher</span>
-        </a>
-      )
-    },
-    {
-      key: '4',
-      label: (
-        <a onClick={handleLogout} className='border-t-2 border-gray-200 flex justify-center items-center p-1'>
-          <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-gray-500' />
-          <span className=' flex-1 ml-2 text-gray-500'>Đăng xuất</span>
-        </a>
-      )
-    },
-    {
-      key: '5',
-      label: (
-        <NavLink className='border-t-2 border-gray-200 flex justify-center items-center p-1' to='/login'>
-          <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-gray-500' />
-          <span className=' flex-1 ml-2 text-gray-500'>Đăng Nhập</span>
-        </NavLink>
-      )
-    }
-  ]
+  const items = currentUser
+    ? [
+        {
+          key: '1',
+          label: (
+            <a className='flex justify-center items-center p-1'>
+              <FontAwesomeIcon icon={faRectangleList} className='text-gray-500' />
+              <span className='flex-1 ml-2 text-gray-500'>Đơn hàng của tôi</span>
+            </a>
+          )
+        },
+        {
+          key: '2',
+          label: (
+            <a className='flex justify-center items-center p-1'>
+              <FontAwesomeIcon icon={faHeart} className='text-gray-500' />
+              <span className='flex-1 ml-2 text-gray-500'>Sản phẩm yêu thích</span>
+            </a>
+          )
+        },
+        {
+          key: '3',
+          label: (
+            <a className='flex justify-center items-center p-1'>
+              <FontAwesomeIcon icon={faTicket} className='text-gray-500' />
+              <span className='flex-1 ml-2 text-gray-500'>Wallet Voucher</span>
+            </a>
+          )
+        },
+        {
+          key: '4',
+          label: (
+            <a onClick={handleLogout} className='flex justify-center items-center p-1'>
+              <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-red-500' />
+              <span className='text-red-500 font-medium flex-1 ml-2 '>Đăng xuất</span>
+            </a>
+          )
+        }
+      ]
+    : [
+        {
+          key: '1',
+          label: (
+            <NavLink to='/login' className='W-full block '>
+              <Button type='primary' danger>
+                Đăng nhập
+              </Button>
+            </NavLink>
+          )
+        },
+        {
+          key: '2',
+          label: (
+            <NavLink to='/register' className='W-full block  '>
+              <Button danger className='w-full'>
+                Đăng ký
+              </Button>
+            </NavLink>
+          )
+        }
+      ]
 
   return (
     <>
