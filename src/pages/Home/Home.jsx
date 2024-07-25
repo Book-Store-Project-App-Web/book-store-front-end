@@ -1,34 +1,44 @@
+import { useEffect, useState } from 'react'
+import ListBook from './ListBook/ListBook'
+import bookAPI from '~/api/bookAPI'
+import { toast } from 'react-toastify'
+
 function Home() {
+  const [listBooks, setListBooks] = useState([])
+
+  const fetchAllBook = async () => {
+    try {
+      const res = await bookAPI.getAllBook()
+      setListBooks(res)
+    } catch (error) {
+      toast.error(error.response.message)
+    }
+  }
+  useEffect(() => {
+    fetchAllBook()
+  }, [])
+
   return (
     <>
-      {/* Main Content */}
-      {/* Banner */}
-      <div className='bg-white p-4 rounded-lg shadow-md mb-4'>
-        <img src='path/to/banner-image.png' alt='Banner' className='w-full h-64 object-cover rounded-lg' />
+      <div className='rounded-lg mb-4 grid grid-cols-3 gap-4'>
+        <div className='col-span-2'>
+          <img src='/banner1.webp' alt='Banner' className='w-full h-full object-cover rounded-lg' />
+        </div>
+        <div className='flex flex-col gap2 h-full justify-between'>
+          <img src='/banner2.webp' alt='Banner' className='h-36 object-cover rounded-lg' />
+          <img src='/banner3.webp' alt='Banner' className='h-36 object-cover rounded-lg' />
+        </div>
       </div>
 
       {/* Categories */}
-      <div className='flex space-x-4 mb-4'>
+      {/* <div className='flex space-x-4 mb-4'>
         <div className='bg-white p-4 rounded-lg shadow-md flex-1'>
           <h2 className='text-xl font-semibold'>Category 1</h2>
         </div>
-        <div className='bg-white p-4 rounded-lg shadow-md flex-1'>
-          <h2 className='text-xl font-semibold'>Category 2</h2>
-        </div>
-        <div className='bg-white p-4 rounded-lg shadow-md flex-1'>
-          <h2 className='text-xl font-semibold'>Category 3</h2>
-        </div>
-      </div>
+      </div> */}
+      {/* <ListCate /> */}
 
-      {/* Products */}
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
-        <div className='bg-white p-4 rounded-lg shadow-md'>
-          <img src='path/to/product-image.png' alt='Product' className='w-full h-48 object-cover rounded-lg mb-4' />
-          <h3 className='text-lg font-semibold'>Product Name</h3>
-          <p className='text-gray-600'>$100</p>
-        </div>
-        {/* Repeat for more products */}
-      </div>
+      <ListBook listBooks={listBooks} />
     </>
   )
 }
