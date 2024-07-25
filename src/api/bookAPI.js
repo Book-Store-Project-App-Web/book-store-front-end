@@ -4,6 +4,10 @@ const bookAPI = {
   getAllBook: () => {
     const url = '/book'
     return axiosClient.get(url)
+  },
+  getBook: (id) => {
+    const url = `/book/${id}`
+    return axiosClient.get(url)
   }
 }
 export default bookAPI

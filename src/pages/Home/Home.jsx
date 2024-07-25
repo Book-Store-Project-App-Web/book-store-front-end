@@ -29,15 +29,6 @@ function Home() {
           <img src='/banner3.webp' alt='Banner' className='h-36 object-cover rounded-lg' />
         </div>
       </div>
-
-      {/* Categories */}
-      {/* <div className='flex space-x-4 mb-4'>
-        <div className='bg-white p-4 rounded-lg shadow-md flex-1'>
-          <h2 className='text-xl font-semibold'>Category 1</h2>
-        </div>
-      </div> */}
-      {/* <ListCate /> */}
-
       <ListBook listBooks={listBooks} />
     </>
   )
