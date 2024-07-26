@@ -5,12 +5,13 @@ import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import bookAPI from '~/api/bookAPI'
+import cartAPI from '~/api/cartAPI'
 import { AuthContext } from '~/context/AuthContext'
 import { capitalizeWords } from '~/utils/capitalizeWords'
 
 function BookDetail() {
   const params = useParams()
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser, countQuantityCart } = useContext(AuthContext)
 
   const [book, setBook] = useState({})
   const [quantity, setQuantity] = useState(1)
@@ -27,11 +28,17 @@ function BookDetail() {
     fetchDataDetailBook()
   }, [])
 
-  const handleAddToCart = (e) => {
-    if (!currentUser) {
-      toast.info('Bạn cần phải đăng nhập')
+  const handleAddToCart = async () => {
+    try {
+      if (!currentUser) {
+        toast.info('Bạn cần phải đăng nhập')
+      }
+      await cartAPI.addToCart(currentUser.id, { bookId: book.id, quantity })
+      await countQuantityCart(currentUser.id)
+      toast.success('Thêm vào giỏ hàng thành công')
+    } catch (error) {
+      console.log(error)
     }
-    console.log(currentUser.id, book.id, quantity)
   }
 
   return (
