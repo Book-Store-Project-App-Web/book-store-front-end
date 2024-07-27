@@ -8,6 +8,8 @@ import bookAPI from '~/api/bookAPI'
 import cartAPI from '~/api/cartAPI'
 import { AuthContext } from '~/context/AuthContext'
 import { capitalizeWords } from '~/utils/capitalizeWords'
+import { formatPriceVND } from '~/utils/formatPriceVND'
+import CountQuantity from '../CountQuantity'
 
 function BookDetail() {
   const params = useParams()
@@ -37,7 +39,7 @@ function BookDetail() {
       await countQuantityCart(currentUser.id)
       toast.success('Thêm vào giỏ hàng thành công')
     } catch (error) {
-      console.log(error)
+      console.log(error.response.message)
     }
   }
 
@@ -76,22 +78,14 @@ function BookDetail() {
                 </span>
               </div>
               <div className='mt-2'>
-                <span className='text-red-600 font-medium text-3xl mr-2 '>
-                  {book.price && ((book.price * (100 - book.discount)) / 100).toLocaleString('vi', { style: 'currency', currency: 'VND' })}
-                </span>
-                <span className='text-gray-400 line-through text-sm mr-2'>{book.price && book.price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
+                <span className='text-red-600 font-medium text-3xl mr-2 '>{book.price && formatPriceVND((book.price * (100 - book.discount)) / 100)}</span>
+                <span className='text-gray-400 line-through text-sm mr-2'>{book.price && formatPriceVND(book.price)}</span>
                 <span className='p-2 bg-red-600 text-white rounded-lg font-medium'>{`-${book.discount}%`}</span>
               </div>
               <div className='mt-4 flex items-center'>
                 <span className='block mb-2 mr-6 text-lg'>Số lượng:</span>
                 <div className='flex items-center justify-between border-solid border-2 border-gray-200 rounded-lg'>
-                  <button className='p-2' onClick={() => setQuantity((quantity) => (quantity > 1 ? quantity - 1 : 1))}>
-                    <FontAwesomeIcon icon={faMinus} />
-                  </button>
-                  <span className='px-4'>{quantity}</span>
-                  <button className='p-2' onClick={() => setQuantity((quantity) => quantity + 1)}>
-                    <FontAwesomeIcon icon={faPlus} />
-                  </button>
+                  <CountQuantity quantity={quantity} setQuantity={setQuantity} />
                 </div>
               </div>
             </div>

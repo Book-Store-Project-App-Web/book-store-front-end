@@ -16,7 +16,7 @@ function Cart() {
           </span>
           <span className='text-sm'>Giỏ hàng</span>
         </NavLink>
-        {currentUser && <span className='w-4 h-4 text-center text-white bg-red-600 absolute rounded-lg text-xs right-0 -top-2'>{quantityCart}</span>}
+        {currentUser && <span className='w-4 h-4 text-center text-white bg-red-600 absolute rounded-lg text-xs right-2 -top-2'>{quantityCart}</span>}
       </div>
     </>
   )
