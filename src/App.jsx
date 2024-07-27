@@ -6,6 +6,7 @@ import Register from './pages/Auth/Register'
 import RequireLayout from './layout/RequireLayout'
 import Cart from './pages/Cart/Cart'
 import BookDetail from './components/BookDetail/BookDetail'
+import Checkout from './pages/Checkout/Checkout'
 
 function App() {
   const router = createBrowserRouter([
@@ -16,7 +17,8 @@ function App() {
         { path: '', element: <Home /> },
         { path: 'login', element: <LogIn /> },
         { path: 'register', element: <Register /> },
-        { path: 'chi-tiet-sach/:name/:id', element: <BookDetail /> }
+        { path: 'chi-tiet-sach/:name/:id', element: <BookDetail /> },
+        { path: 'checkout', element: <Checkout /> }
       ]
     },
     {

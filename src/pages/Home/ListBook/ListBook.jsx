@@ -23,7 +23,7 @@ function ListBook({ listBooks }) {
                           <img src='/s1.webp' alt='Product' className='w-full h-48 object-cover rounded-lg mb-4' />
                         </div>
                         <div>
-                          <p className='text-sm text-gray-700 h-12 p-2  line-clamp-2 '>{book.name}</p>
+                          <p className='text-sm text-gray-700 h-12 py-2  line-clamp-2 '>{book.name}</p>
 
                           <div className='h-10 my-2'>
                             <span className='text-red-600 font-medium text-xl'>
@@ -37,7 +37,7 @@ function ListBook({ listBooks }) {
                               <span className='text-gray-400 ml-2'>(2.5)</span>
                             </div>
                             <p className='text-gray-400 text-xs'>
-                              Đã bán: <span className='text-gray-600'>5</span>
+                              Đã bán: <span className='text-gray-600'>{book.sold || 0}</span>
                             </p>
                           </div>
                         </div>

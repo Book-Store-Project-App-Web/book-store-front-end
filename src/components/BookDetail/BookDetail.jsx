@@ -1,4 +1,4 @@
-import { faCartShopping, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Rate } from 'antd'
 import { useContext, useEffect, useState } from 'react'
@@ -17,6 +17,7 @@ function BookDetail() {
 
   const [book, setBook] = useState({})
   const [quantity, setQuantity] = useState(1)
+  const [error, setError] = useState('')
 
   const fetchDataDetailBook = async () => {
     try {
@@ -39,7 +40,7 @@ function BookDetail() {
       await countQuantityCart(currentUser.id)
       toast.success('Thêm vào giỏ hàng thành công')
     } catch (error) {
-      console.log(error.response.message)
+      setError(error.response?.data?.message)
     }
   }
 
@@ -49,14 +50,29 @@ function BookDetail() {
         <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
           <div className='flex flex-col items-center bg-white p-4 rounded-lg'>
             <img src='/s1.webp' alt='Product' className='w-full h-auto' />
+            {book.stock == 0 && <span className='text-red-600 my-2 text-sm'>* Sách {book.name} hiện tại đã hết hàng</span>}
             <div className='flex items-center justify-between w-full mt-2'>
-              <Button size='' danger className='h-10 font-medium' onClick={handleAddToCart}>
-                <FontAwesomeIcon icon={faCartShopping} />
-                Thêm vào giỏ hàng
-              </Button>
-              <Button type='primary' size='' danger className='basis-3/6 h-10 font-medium'>
-                Mua ngay
-              </Button>
+              {book.stock == 0 ? (
+                <>
+                  <Button disabled danger className='h-10 font-medium' onClick={handleAddToCart}>
+                    <FontAwesomeIcon icon={faCartShopping} />
+                    Thêm vào giỏ hàng
+                  </Button>
+                  <Button type='primary' disabled danger className='basis-3/6 h-10 font-medium'>
+                    Mua ngay
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button danger className='h-10 font-medium' onClick={handleAddToCart}>
+                    <FontAwesomeIcon icon={faCartShopping} />
+                    Thêm vào giỏ hàng
+                  </Button>
+                  <Button type='primary' danger className='basis-3/6 h-10 font-medium'>
+                    Mua ngay
+                  </Button>
+                </>
+              )}
             </div>
           </div>
           <div className='col-span-2 flex flex-col gap-4'>
@@ -74,7 +90,7 @@ function BookDetail() {
                 <Rate allowHalf defaultValue={4} disabled className='text-sm' />
                 <span className='text-yellow-400 ml-2 pr-2 border-r-2'>(4 đánh giá)</span>
                 <span className='text-gray-400 ml-2'>
-                  Đã bán: <span className='text-gray-600'>5</span>
+                  Đã bán: <span className='text-gray-600'>{book.sold || 0}</span>
                 </span>
               </div>
               <div className='mt-2'>
@@ -87,6 +103,7 @@ function BookDetail() {
                 <div className='flex items-center justify-between border-solid border-2 border-gray-200 rounded-lg'>
                   <CountQuantity quantity={quantity} setQuantity={setQuantity} />
                 </div>
+                {error && <span className='fonr-medium text-red-600 ml-2'>{error}</span>}
               </div>
             </div>
 
