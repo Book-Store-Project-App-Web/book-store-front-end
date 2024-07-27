@@ -20,6 +20,11 @@ const cartAPI = {
   deleteCartItem: (userId, bookId) => {
     const url = `/user/delete-cart-item/${bookId}`
     return axiosClient.delete(url)
+  },
+  // --- Đặt hàng các sản phẩm trong giỏ hàng
+  orderCart: (userId, reqBody) => {
+    const url = '/user/order'
+    return axiosClient.post(url, reqBody)
   }
 }
 export default cartAPI

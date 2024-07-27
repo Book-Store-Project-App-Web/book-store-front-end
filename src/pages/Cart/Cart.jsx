@@ -21,7 +21,7 @@ function Cart() {
         setCartItems(res.Books)
         setTotalPrice(res.totalCartPrice)
       } catch (error) {
-        toast('Something Error')
+        console.log(error)
       }
     }
     fetchDataCartItem()
@@ -37,9 +37,7 @@ function Cart() {
       handleQuantityChange(book.id, response.bookCart.quantity, response.bookCart.unitPrice)
       setTotalPrice(response.totalCartPrice)
     } catch (error) {
-      console.log(error)
-    } finally {
-      // setErrBookAvalible(`Sách ${book.name} không có sẵn`)
+      toast.error(error.response?.data?.message || 'Không đủ số lượng')
     }
   }
   const handleDecreaseQuantity = async (book) => {
@@ -48,7 +46,7 @@ function Cart() {
       handleQuantityChange(book.id, response.bookCart.quantity, response.bookCart.unitPrice)
       setTotalPrice(response.totalCartPrice)
     } catch (error) {
-      console.log(error)
+      toast.error(error.response?.data?.message || 'Không đủ số lượng')
     }
   }
   const handleDeleteItemCart = async (book) => {
@@ -85,14 +83,13 @@ function Cart() {
                         <div className='basis-3/5 flex mr-8'>
                           <img src='s1.webp' alt='' className='h-32 mr-4' />
                           <div className='flex flex-col'>
-                            <a href='' className='basis-1/3 text-lg text-gray-600'>
+                            <NavLink to={`/chi-tiet-sach/${item.slug}/${item.id}`} className='basis-1/3 text-lg text-gray-600'>
                               {item.name}
-                            </a>
+                            </NavLink>
                             <div>
                               <span className='font-medium text-lg mr-2'>{formatPriceVND(priceAfterDiscount)}</span>
                               <span className='line-through text-gray-500'>{formatPriceVND(item.price)}</span>
                             </div>
-                            {/* <span className='fonr-medium text-red-600 mt-2'>{errBookAvalible}</span> */}
                           </div>
                         </div>
                         <div className='border-solid border border-gray-200 rounded-lg mr-14'>
@@ -124,9 +121,11 @@ function Cart() {
                   <span className='font-medium'>Tổng Số Tiền (gồm VAT)</span>
                   <span className='text-xl font-medium text-red-600'>{formatPriceVND(totalPrice)}</span>
                 </div>
-                <Button danger type='primary' className=' p-6 !bg-red-600 font-medium mb-4 w-full text-xl'>
-                  THANH TOÁN
-                </Button>
+                <NavLink to='/checkout'>
+                  <Button danger type='primary' className=' p-6 !bg-red-600 font-medium mb-4 w-full text-xl'>
+                    THANH TOÁN
+                  </Button>
+                </NavLink>
               </div>
             </div>
           </div>
