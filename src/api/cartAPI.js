@@ -25,6 +25,10 @@ const cartAPI = {
   orderCart: (userId, reqBody) => {
     const url = '/user/order'
     return axiosClient.post(url, reqBody)
+  },
+  getMyOrder: (userId) => {
+    const url = '/user/my-order'
+    return axiosClient.get(url)
   }
 }
 export default cartAPI
