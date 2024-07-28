@@ -28,12 +28,21 @@ function Profile() {
   const items = currentUser
     ? [
         {
-          key: '1',
+          key: '0',
           label: (
-            <a className='flex justify-center items-center p-1'>
+            <a href='' className='flex justify-center items-center p-1'>
+              <FontAwesomeIcon icon={faUser} className='text-gray-500' />
+              <span className='flex-1 ml-2 text-gray-500'>Tài khoản của tôi</span>
+            </a>
+          )
+        },
+        {
+          key: '2',
+          label: (
+            <NavLink to='/user/order' className='flex justify-center items-center p-1'>
               <FontAwesomeIcon icon={faRectangleList} className='text-gray-500' />
               <span className='flex-1 ml-2 text-gray-500'>Đơn hàng của tôi</span>
-            </a>
+            </NavLink>
           )
         },
         {
