@@ -20,7 +20,7 @@ function ListBook({ listBooks }) {
                     <Badge.Ribbon text={`-${book.discount}%`} color='red'>
                       <div className='p-4'>
                         <div>
-                          <img src='/s1.webp' alt='Product' className='w-full h-48 object-cover rounded-lg mb-4' />
+                          <img src={book.image} alt='Product' className='w-full h-48 object-cover rounded-lg mb-4' />
                         </div>
                         <div>
                           <p className='text-sm text-gray-700 h-12 py-2  line-clamp-2 '>{book.name}</p>
@@ -33,8 +33,8 @@ function ListBook({ listBooks }) {
                           </div>
                           <div className='flex justify-between items-center'>
                             <div>
-                              <Rate allowHalf defaultValue={5} disabled className='text-sm' />
-                              <span className='text-gray-400 ml-2'>(2.5)</span>
+                              <Rate allowHalf defaultValue={book.ratingsAverage} disabled className='text-sm' />
+                              <span className='text-gray-400 ml-2'>({book.ratingsAverage})</span>
                             </div>
                             <p className='text-gray-400 text-xs'>
                               Đã bán: <span className='text-gray-600'>{book.sold || 0}</span>
