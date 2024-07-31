@@ -112,7 +112,7 @@ function Checkout() {
                 <>
                   <div className='flex items-center text-sm  py-2 bg-white rounded-lg mb-2'>
                     <div className='basis-3/5 flex mr-8'>
-                      <img src='s1.webp' alt='' className='h-32 mr-4' />
+                      <img src={item.image} alt='' className='h-32 mr-4' />
                       <div className='flex flex-col'>
                         <NavLink to={`/chi-tiet-sach/${item.slug}/${item.id}`} className='basis-1/3 text-lg text-gray-600'>
                           {item.name}

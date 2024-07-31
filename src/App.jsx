@@ -18,7 +18,7 @@ function App() {
         { path: '', element: <Home /> },
         { path: 'login', element: <LogIn /> },
         { path: 'register', element: <Register /> },
-        { path: 'chi-tiet-sach/:name/:id', element: <BookDetail /> },
+        { path: 'chi-tiet-sach/:slug/:id', element: <BookDetail /> },
         { path: 'checkout', element: <Checkout /> },
         { path: 'user/order', element: <Order /> }
       ]
