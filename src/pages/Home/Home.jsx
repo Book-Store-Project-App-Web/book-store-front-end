@@ -5,18 +5,22 @@ import { toast } from 'react-toastify'
 
 function Home() {
   const [listBooks, setListBooks] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [currentLimit, setCurrentLimit] = useState(10)
+  const [totalRecords, setTotalRecords] = useState(0)
 
   const fetchAllBook = async () => {
     try {
-      const res = await bookAPI.getAllBook()
-      setListBooks(res)
+      const res = await bookAPI.getAllBook(currentPage, currentLimit)
+      setListBooks(res.books)
+      setTotalRecords(res.totalRows)
     } catch (error) {
       toast.error(error.response.message)
     }
   }
   useEffect(() => {
     fetchAllBook()
-  }, [])
+  }, [currentPage])
 
   return (
     <>
@@ -29,7 +33,7 @@ function Home() {
           <img src='/banner3.webp' alt='Banner' className='h-36 object-cover rounded-lg' />
         </div>
       </div>
-      <ListBook listBooks={listBooks} />
+      <ListBook listBooks={listBooks} setCurrentPage={setCurrentPage} totalRecords={totalRecords} currentLimit={currentLimit} />
     </>
   )
 }

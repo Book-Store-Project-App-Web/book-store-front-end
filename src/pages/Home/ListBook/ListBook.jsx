@@ -1,10 +1,13 @@
 import { faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { Badge, Rate } from 'antd'
+import { Badge, Rate, Pagination } from 'antd'
 import { NavLink } from 'react-router-dom'
 
-function ListBook({ listBooks }) {
+function ListBook({ listBooks, setCurrentPage, totalRecords, currentLimit }) {
+  const handleChangePage = (e) => {
+    setCurrentPage(e)
+  }
   return (
     <>
       <div className=''>
@@ -47,6 +50,9 @@ function ListBook({ listBooks }) {
                 </>
               )
             })}
+        </div>
+        <div className='bg-white rounded-b-lg p-2'>
+          <Pagination align='end' total={totalRecords} pageSize={currentLimit} onChange={handleChangePage} />
         </div>
       </div>
     </>
