@@ -1,6 +1,7 @@
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Rate } from 'antd'
+import { OpenAIOutlined } from '@ant-design/icons'
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -10,11 +11,13 @@ import { AuthContext } from '~/context/AuthContext'
 import { capitalizeWords } from '~/utils/capitalizeWords'
 import { formatPriceVND } from '~/utils/formatPriceVND'
 import CountQuantity from '../CountQuantity'
+import ListBook from '~/pages/Home/ListBook/ListBook'
 
 function BookDetail() {
   const { id } = useParams()
   const { currentUser, countQuantityCart } = useContext(AuthContext)
 
+  const [listBooksRecommend, setListBooksRecommend] = useState([])
   const [book, setBook] = useState({})
   const [quantity, setQuantity] = useState(1)
   const [error, setError] = useState('')
@@ -23,6 +26,15 @@ function BookDetail() {
     const fetchDataDetailBook = async () => {
       try {
         const res = await bookAPI.getBook(id)
+        const resRecommend = await cartAPI.getRecommend(currentUser.id)
+        const newResRecommend = []
+        await Promise.all(
+          resRecommend.map(async (id) => {
+            const book = await bookAPI.getBook(id)
+            newResRecommend.push(book)
+          })
+        )
+        setListBooksRecommend(newResRecommend)
         setBook(res)
       } catch (error) {
         console.log(error)
@@ -47,7 +59,7 @@ function BookDetail() {
   return (
     <>
       <div className='p-2'>
-        <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+        <div className='grid grid-cols-2 md:grid-cols-3 gap-4 mb-4'>
           <div className='flex flex-col items-center bg-white p-4 rounded-lg'>
             <img src={book.image} alt='Product' className='w-full h-auto' />
             {book.stock == 0 && <span className='text-red-600 my-2 text-sm'>* Sách {book.name} hiện tại đã hết hàng</span>}
@@ -141,6 +153,7 @@ function BookDetail() {
             </div>
           </div>
         </div>
+        <ListBook listBooks={listBooksRecommend} noPaginate title='Các sản phẩm có thể bạn sẽ thích' iconTitle={<OpenAIOutlined />} />
       </div>
     </>
   )

@@ -2,11 +2,11 @@ import { useContext, useEffect, useState } from 'react'
 import { faDollar, faTruck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ContainerOutlined, BellOutlined, UserOutlined } from '@ant-design/icons'
+import { format } from 'date-fns'
 import { Menu } from 'antd'
 import { toast } from 'react-toastify'
 
 import { formatPriceVND } from '~/utils/formatPriceVND'
-import imgS1 from '/s1.webp'
 import cartAPI from '~/api/cartAPI'
 import { AuthContext } from '~/context/AuthContext'
 // import { useNavigate } from 'react-router-dom'
@@ -89,12 +89,18 @@ function Order() {
               return (
                 <>
                   <div className='bg-white rounded-lg p-4 mb-4'>
-                    <div className='flex justify-end items-center'>
-                      <span className='text-emerald-600 mb-1 pr-2 text-sm border-r-2'>
-                        <FontAwesomeIcon icon={faTruck} className='mr-2' />
-                        Đặt hàng thành công
+                    <div className='flex justify-between items-center'>
+                      <span className='text-sm'>
+                        Ngày đặt hàng: <span className='font-medium'>{format(item.createdAt, 'dd-MM-yyyy HH:mm:ss')}</span>
                       </span>
-                      <span className='text-red-600 ml-2'>HOÀN THÀNH</span>
+
+                      <div>
+                        <span className='text-emerald-600 mb-1 pr-2 text-sm border-r-2'>
+                          <FontAwesomeIcon icon={faTruck} className='mr-2' />
+                          Đặt hàng thành công
+                        </span>
+                        <span className='text-red-600 ml-2'>HOÀN THÀNH</span>
+                      </div>
                     </div>
                     {item.Books &&
                       item.Books.map((element) => {
@@ -103,7 +109,7 @@ function Order() {
                           <>
                             <div className='mt-4 border-t border-gray-200'>
                               <div className='flex py-2 items-center'>
-                                <img src={imgS1} alt='' className='h-20 mr-4' />
+                                <img src={element.image} alt='' className='h-20 mr-4' />
                                 <a href='' className='basis-2/3 text-lg text-gray-600'>
                                   {element.name}
                                 </a>

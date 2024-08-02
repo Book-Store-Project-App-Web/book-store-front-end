@@ -46,7 +46,7 @@ function Profile() {
           )
         },
         {
-          key: '2',
+          key: '3',
           label: (
             <a className='flex justify-center items-center p-1'>
               <FontAwesomeIcon icon={faHeart} className='text-gray-500' />
@@ -55,7 +55,7 @@ function Profile() {
           )
         },
         {
-          key: '3',
+          key: '4',
           label: (
             <a className='flex justify-center items-center p-1'>
               <FontAwesomeIcon icon={faTicket} className='text-gray-500' />
@@ -64,7 +64,7 @@ function Profile() {
           )
         },
         {
-          key: '4',
+          key: '5',
           label: (
             <a onClick={handleLogout} className='flex justify-center items-center p-1'>
               <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-red-500' />
