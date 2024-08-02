@@ -29,6 +29,10 @@ const cartAPI = {
   getMyOrder: (userId) => {
     const url = '/user/my-order'
     return axiosClient.get(url)
+  },
+  getRecommend: (userId) => {
+    const url = '/user/recommend'
+    return axiosClient.post(url, { numNeighbors: 3, numRecommendations: 10 })
   }
 }
 export default cartAPI

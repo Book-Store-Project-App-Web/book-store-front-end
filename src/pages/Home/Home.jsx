@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { faList } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ListBook from './ListBook/ListBook'
 import bookAPI from '~/api/bookAPI'
 import { toast } from 'react-toastify'
@@ -33,7 +35,14 @@ function Home() {
           <img src='/banner3.webp' alt='Banner' className='h-36 object-cover rounded-lg' />
         </div>
       </div>
-      <ListBook listBooks={listBooks} setCurrentPage={setCurrentPage} totalRecords={totalRecords} currentLimit={currentLimit} />
+      <ListBook
+        listBooks={listBooks}
+        setCurrentPage={setCurrentPage}
+        totalRecords={totalRecords}
+        currentLimit={currentLimit}
+        iconTitle={<FontAwesomeIcon icon={faList} />}
+        title='Tất cả sản phẩm'
+      />
     </>
   )
 }

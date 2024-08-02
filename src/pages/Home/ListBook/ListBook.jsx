@@ -1,10 +1,7 @@
-import { faList } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import { Badge, Rate, Pagination } from 'antd'
 import { NavLink } from 'react-router-dom'
 
-function ListBook({ listBooks, setCurrentPage, totalRecords, currentLimit }) {
+function ListBook({ listBooks, setCurrentPage, totalRecords, currentLimit, noPaginate, title, iconTitle }) {
   const handleChangePage = (e) => {
     setCurrentPage(e)
   }
@@ -12,7 +9,9 @@ function ListBook({ listBooks, setCurrentPage, totalRecords, currentLimit }) {
     <>
       <div className=''>
         <p className='p-4 text-lg font-medium rounded-t-lg bg-pink-200'>
-          <FontAwesomeIcon icon={faList} className='mr-2 text-red-600' /> Tất cả sản phẩm
+          <span className='mr-2'>{iconTitle}</span>
+
+          {title}
         </p>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 bg-white p-4 rounded-l-lg'>
           {listBooks &&
@@ -51,9 +50,7 @@ function ListBook({ listBooks, setCurrentPage, totalRecords, currentLimit }) {
               )
             })}
         </div>
-        <div className='bg-white rounded-b-lg p-2'>
-          <Pagination align='end' total={totalRecords} pageSize={currentLimit} onChange={handleChangePage} />
-        </div>
+        <div className='bg-white rounded-b-lg p-2'>{!noPaginate ? <Pagination align='end' total={totalRecords} pageSize={currentLimit} onChange={handleChangePage} /> : ''}</div>
       </div>
     </>
   )
