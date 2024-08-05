@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Rate } from 'antd'
 import { OpenAIOutlined } from '@ant-design/icons'
 import { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import bookAPI from '~/api/bookAPI'
 import cartAPI from '~/api/cartAPI'
@@ -16,6 +16,7 @@ import ListBook from '~/pages/Home/ListBook/ListBook'
 function BookDetail() {
   const { id } = useParams()
   const { currentUser, countQuantityCart } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const [listBooksRecommend, setListBooksRecommend] = useState([])
   const [book, setBook] = useState({})
@@ -26,16 +27,18 @@ function BookDetail() {
     const fetchDataDetailBook = async () => {
       try {
         const res = await bookAPI.getBook(id)
-        const resRecommend = await cartAPI.getRecommend(currentUser.id)
-        const newResRecommend = []
-        await Promise.all(
-          resRecommend.map(async (id) => {
-            const book = await bookAPI.getBook(id)
-            newResRecommend.push(book)
-          })
-        )
-        setListBooksRecommend(newResRecommend)
         setBook(res)
+        if (currentUser) {
+          const resRecommend = await cartAPI.getRecommend(currentUser.id)
+          const newResRecommend = []
+          await Promise.all(
+            resRecommend.map(async (id) => {
+              const book = await bookAPI.getBook(id)
+              newResRecommend.push(book)
+            })
+          )
+          setListBooksRecommend(newResRecommend)
+        }
       } catch (error) {
         console.log(error)
       }
@@ -55,6 +58,14 @@ function BookDetail() {
       setError(error.response?.data?.message)
     }
   }
+  const handleBuyNow = async () => {
+    try {
+      await handleAddToCart()
+      navigate('/my-cart')
+    } catch (error) {
+      setError(error.response?.data?.message)
+    }
+  }
 
   return (
     <>
@@ -66,7 +77,7 @@ function BookDetail() {
             <div className='flex items-center justify-between w-full mt-2'>
               {book.stock == 0 ? (
                 <>
-                  <Button disabled danger className='h-10 font-medium' onClick={handleAddToCart}>
+                  <Button disabled danger className='h-10 font-medium'>
                     <FontAwesomeIcon icon={faCartShopping} />
                     Thêm vào giỏ hàng
                   </Button>
@@ -80,7 +91,7 @@ function BookDetail() {
                     <FontAwesomeIcon icon={faCartShopping} />
                     Thêm vào giỏ hàng
                   </Button>
-                  <Button type='primary' danger className='basis-3/6 h-10 font-medium'>
+                  <Button type='primary' danger className='basis-3/6 h-10 font-medium' onClick={handleBuyNow}>
                     Mua ngay
                   </Button>
                 </>
@@ -153,7 +164,7 @@ function BookDetail() {
             </div>
           </div>
         </div>
-        <ListBook listBooks={listBooksRecommend} noPaginate title='Các sản phẩm có thể bạn sẽ thích' iconTitle={<OpenAIOutlined />} />
+        {currentUser && <ListBook listBooks={listBooksRecommend} noPaginate title='Fahasa gợi ý' iconTitle={<OpenAIOutlined />} />}
       </div>
     </>
   )
